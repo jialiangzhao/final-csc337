@@ -13,8 +13,10 @@ const cookieParser=require('cookie-parser');
 const { nextTick } = require('process');
 const parser= require('body-parser');
 const multer = require('multer');
+const crypto = require('crypto');
 const upload = multer({dest: __dirname + '/public_html/images'});
 const app = express();
+const iterations=1000;
 app.use(parser.json());
 app.use(parser.urlencoded({extended:true}));
 
@@ -36,6 +38,7 @@ function updateSessions(){
     }
   }
 }
+
 setInterval(updateSessions,2000);
 //Create categories of items.
 var Schema = mongoose.Schema;
@@ -51,7 +54,8 @@ var items= mongoose.model('items',itemsSchema);
 //Create categories of users.
 var userSchema = new Schema({
   username:String,
-  password:String,
+  salt:String,
+  hash:String,
   listings: [String],
   purchases:[String]
 });
@@ -90,26 +94,52 @@ app.get('/login/:u/:p',function(req,res) {
   let u=req.params.u;
   let p=req.params.p;
 
-  user.find({username:u,password:p}).exec(function(error,results){
+  user.find({username:u}).exec(function(error,results){
     if(results.length==1){
-      let sessionKey=Math.floor(Math.random()*1000);
-      sessionKeys[u]=[sessionKey,Date.now()];
-      res.cookie('login',{username:u,key:sessionKey},{maxAge:200000});
-      res.send(results);
+
+      var salt = results[0].salt;
+      crypto.pbkdf2(p, salt, iterations, 64, 'sha512',
+      (err,hash) =>{
+        if(err) throw err;
+        let hStr = hash.toString('base64');
+        if(results[0].hash==hStr){
+          let sessionKey=Math.floor(Math.random()*1000);
+          sessionKeys[u]=[sessionKey,Date.now()];
+          res.cookie('login',{username:u,key:sessionKey},{maxAge:200000});
+          res.send(results);
+        }
+        });
+
+
+      
     }else{
       res.send('Incorrect login, please try again...');
     }
   });
 });
 
+
+
+
 //post user information to html
-app.post('/add/user/',function(req,res) {
-  let u1= JSON.parse(req.body.user);
-  user.find({username:u1.username}).exec(function(error,results){
+app.post('/add/:u/:p',function(req,res) {
+  let u=req.params.u;
+  let p=req.params.p;
+
+  user.find({username:u}).exec(function(error,results){
     if(results.length==0){
-      var u2=new user(u1);
-      u2.save(function(err){if(err) console.log("a save errorr");});
-      res.send("Account created!");
+    
+      var salt = crypto.randomBytes(64).toString('base64');
+      crypto.pbkdf2(p, salt, iterations, 64, 'sha512',
+      (err,hash) =>{
+        if(err) throw err;
+        let hStr = hash.toString('base64');
+        var account= new user({'username':u,'salt':salt,
+      'hash':hStr});
+        account.save(function(err){if(err) console.log('an error')});
+        res.send("Account created!");
+        });
+
     }else{
       res.send('Username already taken');
     }
