@@ -20,13 +20,9 @@ function sendName(){
     if(name==""){return;}
     let password=$('#passset').val();
     if(password==""){return;}
-
-    let user={ username:name,password:password};
-    let user_str=JSON.stringify(user);
    
     $.ajax({
-        url:'/add/user/',
-        data:{user:user_str},
+        url:'/add/'+name+'/'+password,
         method:'POST',
         success: function(result){
             $('#errCreate').text(result);
