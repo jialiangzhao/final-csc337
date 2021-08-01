@@ -1,0 +1,93 @@
+/*
+Author: jialiangzhao
+Classroom: csc337
+Content: This css mainly adjusts the visual perception.
+ It slightly adjusted the proportions of some fonts on
+  the left, and also adjusted some colors and displays
+   on the right.
+*/
+
+#errLogin,#errCreate{
+    color:red;
+}
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body,html{
+    height: 100%;
+    width:100%;
+ 
+}
+
+#indexSet{
+    font-size: large;
+    background-color: aquamarine;
+    height: 100%;
+    width:100%;
+    padding: 5%;
+   
+}
+#ostaa{
+    font-size:50px;
+    color: blue;
+}
+#postSet{
+    font-size: large;
+    background-color: lightskyblue;
+    height: 100%;
+    width:100%;
+    padding: 10%;
+}
+
+#top{
+    width: 100%;
+    height:20%;
+    background-color: lightskyblue;
+}
+#searchSet{
+    position:fixed;
+    display: inline-block;
+    background-color: lightgreen;
+    height:80%;
+    width: 50%;
+    border: 4px solid gray;
+}
+#displaySet{
+    left:50%;
+    position:fixed;
+    display: inline-block;
+    background-color: lightgreen;
+    height:80%;
+    width: 50%;
+    border: 4px solid gray;
+    text-align: center;
+    overflow-y:scroll;
+}
+.itemDisplay{
+    border: 4px solid green;
+    width: 80%;
+    margin-left: 10%;
+}
+.itemName{
+    margin-top: 7%;
+}
+h1{
+    margin-left: 5%;
+}
+.left{
+    margin-top: 1%;
+    margin-left: 5%;
+    font-size: larger;
+}
+.sleft{
+    margin-top: 7%;
+    margin-left: 5%;
+    font-size: larger;
+}
+input{
+    font-size: large;
+}
+button{
+    font-size: large;
+}

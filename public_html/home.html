@@ -1,0 +1,53 @@
+<!--Author: jialiangzhao
+Classroom: csc337
+Content: This is the message of the item, 
+if you want to create something, or if you
+ want to buy something. This page will be implemented.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ostaa</title>
+        <script src="jquery.js"></script>
+        <link rel="stylesheet"
+                type="text/css"
+                href="style.css">
+        <script src="java.js"></script>
+    </head>
+    <body onload="getName();">
+        <div id="top"> <h1 id="ostaa">Ostaa <h1></div>
+
+
+        <div id="searchSet" >
+            <h1 >Welcome <span id="wellcome"></span>! What would you like to do?</h1>
+            <div class="sleft" >
+                <input type ="text" id="search"/>
+                <button  type="button" onclick="searchList();" >Search Listings</button>
+            </div>
+
+            <div class="sleft">
+                <button  type="button" onclick="getList('listings');">View your Listings</button>
+            </div>
+
+            <div class="sleft">
+                <button  type="button" onclick="getList('purchases');" >View your purchases</button>
+            </div>
+
+            <div class="sleft">
+                
+                <button onclick="goPost();" type="button" >Create a Listing</button>
+            </div>
+
+        </div>
+
+        <div id="displaySet">
+            
+
+
+        </div>
+
+    </body>
+    
+
+</html>
