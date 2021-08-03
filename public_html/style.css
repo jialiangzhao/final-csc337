@@ -28,7 +28,7 @@ body,html{
     padding: 5%;
    
 }
-#ostaa{
+#keepBook{
     font-size:50px;
     color: blue;
 }
@@ -38,6 +38,16 @@ body,html{
     height: 100%;
     width:100%;
     padding: 10%;
+}
+
+#addSet{
+    font-size: large;
+    background-color: gold;
+    height: 100%;
+    width:100%;
+    padding-top: 10%;
+    text-align: center;
+    
 }
 
 #top{
@@ -76,7 +86,7 @@ h1{
     margin-left: 5%;
 }
 .left{
-    margin-top: 1%;
+    margin-top: 5%;
     margin-left: 5%;
     font-size: larger;
 }
