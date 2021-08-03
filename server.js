@@ -29,17 +29,7 @@ const db = mongoose.connection;
 const mongoDBURL = 'mongodb://127.0.0.1/auto';
 const port = 3000;
 
-var sessionKeys ={};
-function updateSessions(){
-  let now=Date.now();
-  for(e in sessionKeys){
-    if(sessionKeys[e][1]<(now-200000)){
-      delete sessionKeys[e];
-    }
-  }
-}
 
-setInterval(updateSessions,2000);
 //Create categories of items.
 var Schema = mongoose.Schema;
 var itemsSchema = new Schema({
@@ -47,19 +37,53 @@ var itemsSchema = new Schema({
   description:String,
   image:String,
   price:Number,
-  stat:String
+  stat:String,
+  deadLine:String,
+  current:Number
 });
 var items= mongoose.model('items',itemsSchema);
 
 //Create categories of users.
 var userSchema = new Schema({
   username:String,
+  head:String,
   salt:String,
   hash:String,
   listings: [String],
-  purchases:[String]
+  incomeList:[String]
 });
 var user= mongoose.model('user',userSchema);
+
+var incomeSchema = new Schema({
+  incomename:String,
+  incomedes:String,
+  kind:String,
+  money:Number,
+  inOrOut:String,
+});
+var income= mongoose.model('income',incomeSchema);
+
+var sessionKeys ={};
+function updateSessions(){
+  var now=Date.now();
+  for(e in sessionKeys){
+    if(sessionKeys[e][1]<(now-200000)){
+      delete sessionKeys[e];
+    }
+  }
+  items.find({}).exec(function(error,results){
+    for(i in results){
+      if(results[i].deadLine<=now){
+        results[i].stat="SOLD";
+        results[i].save(
+          function(err){if(err) console.log("a save errorr");}
+          );
+        }
+      }
+  });
+}
+
+setInterval(updateSessions,2000);
 
 
 
@@ -110,8 +134,6 @@ app.get('/login/:u/:p',function(req,res) {
         }
         });
 
-
-      
     }else{
       res.send('Incorrect login, please try again...');
     }
@@ -122,9 +144,13 @@ app.get('/login/:u/:p',function(req,res) {
 
 
 //post user information to html
-app.post('/add/:u/:p',function(req,res) {
-  let u=req.params.u;
-  let p=req.params.p;
+app.post('/new',upload.single('photo'),function(req,res,next) {
+ 
+  let u=req.body.name;
+  let p=req.body.password;
+  if(u=="" || p=="" || req.file.filename==undefined){
+    res.send('no name or password or avatar, do again');
+  }
 
   user.find({username:u}).exec(function(error,results){
     if(results.length==0){
@@ -135,13 +161,13 @@ app.post('/add/:u/:p',function(req,res) {
         if(err) throw err;
         let hStr = hash.toString('base64');
         var account= new user({'username':u,'salt':salt,
-      'hash':hStr});
+       "head":req.file.filename,'hash':hStr});
         account.save(function(err){if(err) console.log('an error')});
-        res.send("Account created!");
+        res.redirect("index.html");
         });
 
     }else{
-      res.send('Username already taken');
+      res.send('Username already taken, do again');
     }
   });
 });
