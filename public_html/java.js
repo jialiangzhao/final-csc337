@@ -15,20 +15,7 @@ function goPost(){
 }
 
 //Find the message in the input box and enter it into mongodb.
-function sendName(){
-    let name=$('#nameset').val();
-    if(name==""){return;}
-    let password=$('#passset').val();
-    if(password==""){return;}
-   
-    $.ajax({
-        url:'/add/'+name+'/'+password,
-        method:'POST',
-        success: function(result){
-            $('#errCreate').text(result);
-        }
-    })
-}
+
 
 //login you user if exsit
 function loginName(){
@@ -101,6 +88,7 @@ function buy(id){
     let u = decodeURIComponent(document.cookie.split('=')[1]);
     u=u.substring(2);
     u=JSON.parse(u);
+    console.log(u);
     $.ajax({
         url:'/buy/'+titleId+'/'+u.username,
         method:'POST',
@@ -115,10 +103,11 @@ function getList(value){
     u=u.substring(2);
     u=JSON.parse(u);
     let name=u.username;
+    
 
     let thing=value;
     $.ajax({
-        url:'/view/'+thing+'/'+name,
+        url:'/view/'+thing+'/'+name+'/',
         method:'GET',
         success: function(result){
             result=JSON.parse(result);
