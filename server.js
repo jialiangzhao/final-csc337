@@ -29,17 +29,7 @@ const db = mongoose.connection;
 const mongoDBURL = 'mongodb://127.0.0.1/auto';
 const port = 3000;
 
-var sessionKeys ={};
-function updateSessions(){
-  let now=Date.now();
-  for(e in sessionKeys){
-    if(sessionKeys[e][1]<(now-200000)){
-      delete sessionKeys[e];
-    }
-  }
-}
 
-setInterval(updateSessions,2000);
 //Create categories of items.
 var Schema = mongoose.Schema;
 var itemsSchema = new Schema({
@@ -47,19 +37,54 @@ var itemsSchema = new Schema({
   description:String,
   image:String,
   price:Number,
-  stat:String
+  stat:String,
+  deadLine:Object,
+  buyer:String
 });
 var items= mongoose.model('items',itemsSchema);
 
 //Create categories of users.
 var userSchema = new Schema({
   username:String,
+  head:String,
   salt:String,
   hash:String,
+  addMoney:Number,
   listings: [String],
-  purchases:[String]
+  incomeList:[String]
 });
 var user= mongoose.model('user',userSchema);
+
+var incomeSchema = new Schema({
+  incomename:String,
+  incomedes:String,
+  kind:String,
+  money:Number,
+  inOrOut:String,
+});
+var income= mongoose.model('income',incomeSchema);
+
+var sessionKeys ={};
+function updateSessions(){
+  var now=Date.now();
+  for(e in sessionKeys){
+    if(sessionKeys[e][1]<(now-200000)){
+      delete sessionKeys[e];
+    }
+  }
+  items.find({}).exec(function(error,results){
+    for(i in results){
+      if(results[i].deadLine<=now){
+        results[i].stat="SOLD";
+        results[i].save(
+          function(err){if(err) console.log("a save errorr");}
+          );
+        }
+      }
+  });
+}
+
+setInterval(updateSessions,2000);
 
 
 
@@ -85,6 +110,8 @@ function home(req,res,next){
 
 app.use('/home.html',home);
 app.use('/post.html',home);
+app.use('/auction.html',home);
+
 
 app.use('/',express.static('public_html'));
 
@@ -110,8 +137,6 @@ app.get('/login/:u/:p',function(req,res) {
         }
         });
 
-
-      
     }else{
       res.send('Incorrect login, please try again...');
     }
@@ -122,9 +147,14 @@ app.get('/login/:u/:p',function(req,res) {
 
 
 //post user information to html
-app.post('/add/:u/:p',function(req,res) {
-  let u=req.params.u;
-  let p=req.params.p;
+app.post('/new',upload.single('photo'),function(req,res,next) {
+ 
+  let u=req.body.name;
+  let p=req.body.password;
+  let add=req.body.addMoney;
+  if(u=="" || p=="" || req.file.filename==undefined || add==""){
+    res.send('no name or password or avatar, do again');
+  }
 
   user.find({username:u}).exec(function(error,results){
     if(results.length==0){
@@ -135,13 +165,13 @@ app.post('/add/:u/:p',function(req,res) {
         if(err) throw err;
         let hStr = hash.toString('base64');
         var account= new user({'username':u,'salt':salt,
-      'hash':hStr});
+       'hash':hStr,"head":req.file.filename,'addMoney':add});
         account.save(function(err){if(err) console.log('an error')});
-        res.send("Account created!");
+        res.redirect("index.html");
         });
 
     }else{
-      res.send('Username already taken');
+      res.send('Username already taken, do again');
     }
   });
 });
@@ -168,33 +198,50 @@ app.get('/view/:thing/:name',function(req,res) {
   let thing=req.params.thing;
   let name=req.params.name;
   var array=[];
-  user.find({}).exec(function(error,results){
-    
-    for(i in results){
-      if(results[i].username==name){
+  user.find({username:name}).exec(function(error,results){
+
+      if(results.length!=0){
         if(thing=="listings"){
-          array=results[i].listings;
+          array=results[0].listings;
+          items.find({}).exec(function(error1,results1){
+            let word="[";
+           
+            for(i in array){
+              for(j in results1){
+                if(results1[j]._id==array[i]){
+                  word+=JSON.stringify(results1[j],null,2)+",";
+                }
+              }
+           }
+           if(word=="["){
+             word+="]";
+           }else{
+           word=word.substring(0, word.length - 1) +"]";}
+            res.send(word);
+          });
+
+          
         }else if(thing=="purchases"){
-          array=results[i].purchases;
+
+          items.find({stat:"SOLD"}).exec(function(error2,results2){
+            let word="[";
+              for(j in results2){
+                if(results2[j].buyer==name){
+                  word+=JSON.stringify(results2[j],null,2)+",";
+                }
+              }
+           if(word=="["){
+             word+="]";
+           }else{
+           word=word.substring(0, word.length - 1) +"]";}
+            res.send(word);
+          });
         }
+      }else{
+        res.send("view error");
       }
-    }
-    items.find({}).exec(function(error1,results1){
-      let word="[";
-     
-      for(i in array){
-        for(j in results1){
-          if(results1[j]._id==array[i]){
-            word+=JSON.stringify(results1[j],null,2)+",";
-          }
-        }
-     }
-     if(word=="["){
-       word+="]";
-     }else{
-     word=word.substring(0, word.length - 1) +"]";}
-      res.send(word);
-    });
+    
+    
   });
 });
 
@@ -203,15 +250,17 @@ app.get('/view/:thing/:name',function(req,res) {
 app.post('/buy/:id/:name',function(req,res) {
   let tid=req.params.id;
   let name=req.params.name;
+  
   items.find({_id:tid})
   .exec(function(error,results){
-    results[0].stat="SOLD";
-    results[0].save(function(err){if(err) console.log("a save errorr");});
-    user.find({username:name})
-    .exec(function(error,result){
-      result[0].purchases.push(results[0]._id);
-      result[0].save(function(err){if(err) console.log("a save errorr");});
+    user.find({username:name}).exec(function(error,results1){
+      results[0].buyer=name;
+      results[0].price+=results1[0].addMoney;
+      results[0].save(function(err){if(err) console.log("a save errorr");});
+
     });
+    
+    
   });
 });
 
@@ -219,12 +268,19 @@ app.post('/buy/:id/:name',function(req,res) {
 //post items information to html
 app.post('/upload', upload.single('photo'),
  function(req, res, next){
+  var time= new Date();
+  
+  var addTime=parseInt(req.body.dead);
+   if(req.body.option=='h'){ time.setHours(time.getHours()+addTime);}
+   if(req.body.option=='m'){ time.setMinutes(time.getMinutes()+addTime);}
+   if(req.body.option=='s'){ time.setSeconds(time.getSeconds()+addTime);}
   let u1={
     title:req.body.title,
     description:req.body.desce,
     image:req.file.filename,
     price:req.body.price,
-    stat:req.body.status};
+    deadLine:time,
+    stat:"SALE"};
   
   let name = req.cookies.login.username;
   user.find({username:name})
@@ -237,13 +293,35 @@ app.post('/upload', upload.single('photo'),
   });
 
 });
+//post user information to html
+app.post('/change',upload.single('photo'),function(req,res,next) {
+ 
+  let u = req.cookies.login.username;
+  let add=req.body.addMoney;
+  if(req.file.filename==undefined || add==""){
+    res.send('no name or password or avatar, do again');
+  }
+
+  user.find({username:u}).exec(function(error,results){
+    if(results.length!=0){
+      results[0].addMoney=add;
+      results[0].head=req.file.filename;
+      results[0].save(function(err){if(err) console.log("a save errorr");});
+      res.redirect("index.html");
+      
+
+    }else{
+      res.send('Username already taken, do again');
+    }
+  });
+});
 //You can look for the string
 app.get('/search/:word',function(req,res) {
 
-    let word=req.params.word;
-    items.find({description:{$regex: word} }).exec(function(error,results){
-      res.send(JSON.stringify(results,null,2));
-    });
+  let word=req.params.word;
+  items.find({title:{$regex: word} }).exec(function(error,results){
+    res.send(JSON.stringify(results,null,2));
+   });
    
 
 });
