@@ -1,0 +1,111 @@
+/*
+Team: Jialiang Zhao & Zhaobang Zhu
+CSc 337 Final Project
+This is the styles for all pages.
+*/
+
+#errLogin,#errCreate{
+    color:red;
+}
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body,html{
+    height: 100%;
+    width:100%;
+ 
+}
+
+#indexSet{
+    font-size: large;
+    background-color: rgb(31, 112, 218);
+    color:blue;
+    height: 100%;
+    width:100%;
+    padding: 5%;
+    text-align: center;
+}
+#keepBook{
+    font-size:70px;
+    color: blue;
+}
+#postSet{
+    font-size: large;
+    background-color: rgb(31, 112, 218);
+    height: 100%;
+    width:100%;
+    padding: 10%;
+}
+
+#addSet{
+    font-size: large;
+    background-color: rgb(31, 112, 218);
+    height: 150%;
+    width:100%;
+    padding-top: 10%;
+    text-align: center;   
+}
+
+
+#top{
+    width: 100%;
+    height:10%;
+    background-color: rgb(31, 112, 218);
+}
+#searchSet{
+    position:fixed;
+    display: inline-block;
+    background-color: rgb(31, 112, 218);
+    height:80%;
+    width: 50%;
+    border: 4px solid gray;
+}
+#userSet{
+    position:fixed;
+    display: inline-block;
+    background-color: rgb(31, 112, 218);
+    height:80%;
+    width: 50%;
+    border: 4px solid gray;
+}
+#displaySet{
+    left:50%;
+    position:fixed;
+    display: inline-block;
+    background-color: rgb(31, 112, 218);
+    height:80%;
+    width: 50%;
+    border: 4px solid gray;
+    text-align: center;
+    overflow-y:scroll;
+}
+.itemDisplay{
+    border: 4px solid green;
+    width: 80%;
+    margin-left: 10%;
+}
+.itemName{
+    margin-top: 7%;
+}
+h1{
+    font-size: 70px;
+    margin-left: 5%;
+}
+.left{
+    margin-top: 5%;
+    margin-left: 5%;
+    font-size: larger;
+}
+.sleft{
+    margin-top: 7%;
+    margin-left: 5%;
+    font-size: larger;
+}
+input{
+    font-size: large;
+}
+button{
+    font-size: large;
+    
+}

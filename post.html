@@ -1,0 +1,62 @@
+<!--Author: jialiangzhao
+Classroom: csc337
+Content: If you want to upload something,
+you need to enter it. Then you can upload the 
+message after collecting it.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>KeepBooK Publish Auction</title>
+        <script src="jquery.js"></script>
+        <link rel="stylesheet"
+                type="text/css"
+                href="style.css">
+        <script src="java.js"></script>
+    </head>
+    <body>
+        
+        <div id="postSet">
+            <h1 id="ostaa">KeepBooK</h1>
+            <h1>Add an Auction Item</h1>
+            
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="left" >
+                    <label  for="title">Title</label>
+                    <input type ="text" name="title" id="title"/>
+                </div>
+    
+                <div class="left">
+                    <label   for="desce">Desce</label>
+                    <input type ="text" name="desce" id="desce"/>
+                </div>
+    
+                <div class="left">
+                    <label   for="price">Price</label>
+                    <input type ="text" name="price" id="price"/>
+                </div>
+                <div class="left">
+                    <div >deadline due by how long?</div>
+                    <label for="h">hour</label>
+                    <input type ="radio" name="option" id="h" value="h" required />
+                    <label for="m">minute</label>
+                    <input type ="radio" name="option" id="m" value="m" required/>
+                    <label for="s">second</label>
+                    <input type ="radio" name="option" id="s" value="s" required/>
+                </div>
+                <div class="left">
+                    <label   for="dead">deadLine:</label>
+                    <input type ="text" name="dead" id="dead" pattern="[0-9]{2}" required/>
+                </div>
+    
+                <input type="file" accept="image/*" name="photo" >
+                <input type="submit" value="upload">
+        </form>
+    </div>
+
+    
+    </body>
+    
+
+</html>
