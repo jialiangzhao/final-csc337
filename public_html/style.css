@@ -43,7 +43,7 @@ body,html{
 #addSet{
     font-size: large;
     background-color: gold;
-    height: 100%;
+    height: 150%;
     width:100%;
     padding-top: 10%;
     text-align: center;
@@ -52,7 +52,7 @@ body,html{
 
 #top{
     width: 100%;
-    height:20%;
+    height:10%;
     background-color: lightskyblue;
 }
 #searchSet{
@@ -63,13 +63,21 @@ body,html{
     width: 50%;
     border: 4px solid gray;
 }
-#displaySet{
-    left:50%;
+#userSet{
     position:fixed;
     display: inline-block;
     background-color: lightgreen;
-    height:80%;
-    width: 50%;
+    height:90%;
+    width: 40%;
+    border: 4px solid gray;
+}
+#displaySet{
+    left:40%;
+    position:fixed;
+    display: inline-block;
+    background-color: lightgreen;
+    height:90%;
+    width: 60%;
     border: 4px solid gray;
     text-align: center;
     overflow-y:scroll;
@@ -91,7 +99,7 @@ h1{
     font-size: larger;
 }
 .sleft{
-    margin-top: 7%;
+    margin-top: 5%;
     margin-left: 5%;
     font-size: larger;
 }
@@ -100,4 +108,5 @@ input{
 }
 button{
     font-size: large;
+    
 }

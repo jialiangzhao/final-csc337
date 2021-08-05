@@ -21,20 +21,11 @@ message after collecting it.
             <h1 id="keepBook">KeepBooK</h1>
             <h1>Create a super cool account</h1>
             
-            <form action="/new" method="post" enctype="multipart/form-data">
-                <div class="left" >
-                    <label  for="name">New name:</label>
-                    <input type ="text" name="name" id="name"/>
-                </div>
+            <form action="/change" method="post" enctype="multipart/form-data">
     
                 <div class="left">
-                    <label   for="password">Password:</label>
-                    <input type ="text" name="password" id="password"/>
-                </div>
-
-                <div class="left">
-                    <label   for="addMoney">addMoney:</label>
-                    <input type ="text" name="addMoney" id="addMoney"/>
+                    <label   for="addMoney">change addMoney:</label>
+                    <input type ="text" name="addMoney" id="addMoney" pattern="[0-9]{1,}"/>
                     <p>tip: if you want to auction something, how much you want to add.</p>
                 </div>
     
@@ -42,9 +33,9 @@ message after collecting it.
             </br>
     
                 <input type="file" accept="image/*" name="photo" >
-                <input type="submit" value="upload avatar">
+                <input type="submit" value="upload new avatar">
         </form>
-        <p>When you press the button, your money is not in your control.</p>
+        
         <img src="images/img1.jpg" id="img1" alt="lol" height="200" width="200"/>
         <div id="errCreate" class="left" ></div>
     </div>
