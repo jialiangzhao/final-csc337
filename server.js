@@ -70,7 +70,7 @@ var sessionKeys ={};
 function updateSessions(){
   var now=Date.now();
   for(e in sessionKeys){
-    if(sessionKeys[e][1]<(now-200000)){
+    if(sessionKeys[e][1]<(now-2000000)){
       delete sessionKeys[e];
     }
   }
@@ -135,7 +135,9 @@ app.get('/login/:u/:p',function(req,res) {
         if(results[0].hash==hStr){
           let sessionKey=Math.floor(Math.random()*1000);
           sessionKeys[u]=[sessionKey,Date.now()];
-          res.cookie('login',{username:u,key:sessionKey,incomeList:results[0].incomeList},{maxAge:200000});
+          res.cookie('login',{username:u,key:sessionKey,
+            incomeList:results[0].incomeList,
+          image:results[0].head},{maxAge:2000000});
           res.send(results);
         }
       });
@@ -301,21 +303,26 @@ app.post('/change',upload.single('photo'),function(req,res,next) {
  
   let u = req.cookies.login.username;
   let add=req.body.addMoney;
-  if(req.file.filename==undefined || add==""){
+  if(req.file==undefined && add==""){
     res.send('no name or password or avatar, do again');
   }
 
   user.find({username:u}).exec(function(error,results){
-    if(results.length!=0){
+    if(req.file==undefined && add!=""){
+      results[0].addMoney=add;
+      results[0].save(function(err){if(err) console.log("a save errorr");});
+    }else if(add=="" && req.file!=undefined ){
+      results[0].head=req.file.filename;
+      results[0].save(function(err){if(err) console.log("a save errorr");});
+      res.cookie('login',{username:u,key:req.cookies.login.key,
+        incomeList:results[0].incomeList,
+        image:results[0].head},{maxAge:200000});
+    }else if(add!="" && req.file!=undefined ){
       results[0].addMoney=add;
       results[0].head=req.file.filename;
       results[0].save(function(err){if(err) console.log("a save errorr");});
-      res.redirect("index.html");
-      
-
-    }else{
-      res.send('Username already taken, do again');
     }
+    res.redirect("index.html");
   });
 });
 //You can look for the string
@@ -347,7 +354,7 @@ app.get('/income/:name',function(req,res) {
 app.post('/add/:user',function(req,res) {
   let u=req.params.user;
   let in1= JSON.parse(req.body.income);
-  
+
     user.find({username:u}).exec(function(error,results){
       if(results.length>0){
         var in2=new income(in1);
@@ -355,7 +362,9 @@ app.post('/add/:user',function(req,res) {
 
         results[0].incomeList.push(in2);
         results[0].save(function(err){if(err) console.log("a save errorr");});
-        
+        res.cookie('login',{username:u,key:req.cookies.login.key,
+          incomeList:results[0].incomeList,
+          image:results[0].head},{maxAge:2000000});
         res.send("income add!");
       }else{
         res.send("add error");
