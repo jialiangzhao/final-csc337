@@ -48,6 +48,11 @@ function getName(){
     u=u.substring(2);
     u=JSON.parse(u);
     $('#wellcome').text(u.username);
+    $('#wellname').text(u.username);
+    let content=$('#head').html();
+    content+= "<img src='images/"+u.image+"' class='topclass' id='img2' alt='head' height='50' width='50'/>";
+    $('#head').html(content);
+
 }
 
 //search you list
@@ -62,13 +67,13 @@ function searchList(value){
             result=JSON.parse(result);
             let content = "";
             for(i in result){
-                content+= "<div class='itemDisplay'>";
+                content+= "<div class='itemDisplay1'>";
                 content+="<h1 class='itemName'>"+result[i].title+"</h1>";
 
                 content+="<img src='./images/"+result[i].image+"' alt='file' width='200' height='150'></img>"
 
                 content+="<p class='itemName'>"+result[i].description+"</h1>";
-                content+="<p class='itemName'>"+result[i].price+"</p>";
+                content+="<p class='itemName'>Current price:"+result[i].price+"</p>";
 
                 if(result[i].stat.toLowerCase()=="sale"){
                     content+="<button  class='itemName' type='button' onclick=\"buy('"+result[i]._id+"');\" >Spend higher prices!</button>";
@@ -77,7 +82,7 @@ function searchList(value){
                 }
                 content+="</div>";
             }
-            $('#displaySet').html(content);
+            $('#displaySet1').html(content);
         }
     })
 }
@@ -113,13 +118,13 @@ function getList(value){
             result=JSON.parse(result);
             let content = "";
             for(i in result){
-                content+= "<div class='itemDisplay'>";
+                content+= "<div class='itemDisplay1'>";
                 content+="<h1 class='itemName'>"+result[i].title+"</h1>";
 
                 content+="<img src='./images/"+result[i].image+"' alt='file' width='200' height='150'></img>"
 
                 content+="<p class='itemName'>"+result[i].description+"</h1>";
-                content+="<p class='itemName'>"+result[i].price+"</p>";
+                content+="<p class='itemName'Current price:>"+result[i].price+"</p>";
                 if(result[i].stat.toLowerCase()=="sale"){
                     content+="<button  class='itemName' type='button' onclick=\"buy('"+result[i]._id+"');\" >Spend higher prices!</button>";
                 }else if(result[i].stat.toLowerCase()=="sold"){
@@ -129,7 +134,7 @@ function getList(value){
             }
            
 
-            $('#displaySet').html(content);
+            $('#displaySet1').html(content);
         }
     })
 }

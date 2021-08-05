@@ -7,34 +7,40 @@ Content: This css mainly adjusts the visual perception.
    on the right.
 */
 
+
 #errLogin,#errCreate{
     color:red;
 }
 *{
+    outline: none; box-sizing: border-box;
     margin: 0px;
     padding: 0px;
 }
 body,html{
     height: 100%;
     width:100%;
+    background: linear-gradient(-135deg,#c850c0,#4158d0);
  
 }
 
 #indexSet{
+    align-items: center;
     font-size: large;
-    background-color: aquamarine;
-    height: 100%;
+    justify-content: center;
+	min-height: 100vh;
     width:100%;
-    padding: 5%;
-   
+    padding-top: 5%;
+    text-align: center;
 }
 #keepBook{
     font-size:50px;
     color: blue;
+    font-family:"Times New Roman", Times, serif;
+    font-style:italic;
 }
 #postSet{
     font-size: large;
-    background-color: lightskyblue;
+    background: linear-gradient(-135deg,#c850c0,lightskyblue);
     height: 100%;
     width:100%;
     padding: 10%;
@@ -42,51 +48,123 @@ body,html{
 
 #addSet{
     font-size: large;
-    background-color: gold;
+    background: linear-gradient(-135deg,#b89fb6,gold);
     height: 150%;
     width:100%;
     padding-top: 10%;
     text-align: center;
-    
 }
 
 #top{
     width: 100%;
-    height:10%;
-    background-color: lightskyblue;
+    height:15%;
+    background: linear-gradient(-135deg,#c850c0,lightskyblue);
+  
 }
+.topclass{
+    margin-left: 10%;
+    margin-top: 1%;
+    display: inline-block;
+  
+}
+#img2{
+    border-radius:50%;
+    border: 2px solid blanchedalmond;
+}
+#wellname{
+    border: 2px solid black;
+}
+
 #searchSet{
+    
     position:fixed;
     display: inline-block;
-    background-color: lightgreen;
-    height:80%;
-    width: 50%;
+    background: linear-gradient(-135deg,aquamarine,rgb(24, 89, 130));
+    
+    height:100%;
+    width: 100%;
     border: 4px solid gray;
 }
 #userSet{
+    left:70%;
     position:fixed;
-    display: inline-block;
-    background-color: lightgreen;
+    
+    background: linear-gradient(-135deg,aquamarine,rgb(24, 89, 130));
     height:90%;
-    width: 40%;
+    width: 30%;
     border: 4px solid gray;
 }
+
 #displaySet{
-    left:40%;
+    
     position:fixed;
-    display: inline-block;
-    background-color: lightgreen;
+    
+    background: linear-gradient(-135deg,aquamarine,rgb(24, 89, 130));
     height:90%;
-    width: 60%;
+    width: 70%;
     border: 4px solid gray;
     text-align: center;
     overflow-y:scroll;
 }
-.itemDisplay{
-    border: 4px solid green;
-    width: 80%;
-    margin-left: 10%;
+#userSet1{
+    position:fixed;
+    
+    background: linear-gradient(-135deg,aquamarine,rgb(24, 89, 130));
+    height:20%;
+    width: 100%;
+    border: 4px solid gray;
 }
+
+#displaySet1{
+  
+    position:fixed;
+    top:35%;
+    background: linear-gradient(-135deg,aquamarine,rgb(24, 89, 130));
+    height:65%;
+    width: 100%;
+    border: 4px solid gray;
+    text-align: center;
+    overflow-y:scroll;
+}
+
+.itemDisplay {
+    border-radius: 10%;
+    font-family: Arial;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    color: white;
+    padding: 40px;
+    box-shadow:
+        0 0 0 1px #009688,
+        0 0 0 5px #F44336,
+        0 0 0 9px #673AB7,
+        0 0 0 10px #009688;
+    outline: dashed 10px #009688;
+      
+}
+@keyframes animated-border {
+    0% {
+      box-shadow: 0 0 0 0 rgba(240, 47, 47, 0.357);
+    }
+    100% {
+       box-shadow: 0 0 0 70px rgba(255,255,255,0);
+    }
+  }
+  .itemDisplay1 {
+    width: 80%;
+    animation: animated-border 1.5s infinite;
+    font-family: Arial;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
+    
+    border: 4px solid gold;
+    border-radius: 10px;
+    margin-left: 10%;
+  }
+  
+
 .itemName{
     margin-top: 7%;
 }
@@ -97,16 +175,198 @@ h1{
     margin-top: 5%;
     margin-left: 5%;
     font-size: larger;
+    display: inline-block;
 }
 .sleft{
+  display: inline-block;
+   margin-left: 3%;
+    font-size: larger;
+}
+.sel_wrap{
+    display: inline-block;
+     margin-left: 3%;
+      font-size: larger;
+  }
+.hleft{
     margin-top: 5%;
     margin-left: 5%;
     font-size: larger;
+    display: inline-block;
+   
+    
+}
+.inhome{
+    width:150px;
+    height:150px;
+   
+    background-color:aqua;
+    border-radius:50%;
 }
 input{
     font-size: large;
 }
+
+
 button{
     font-size: large;
     
 }
+
+
+
+/* General Buttons */
+button {
+    width: 130px;
+    height: 40px;
+    background: linear-gradient(to bottom, #4eb5e5 0%,#389ed5 100%); 
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    border-bottom: 4px solid #2b8bc6;
+    color: #fbfbfb;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+    font-size: 15px;
+    text-align: left;
+    text-indent: 5px;
+    box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);
+    cursor: pointer;
+  
+  /* Just for presentation */  
+   
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  button:active {
+    box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2);
+    top: 1px;
+  }
+  
+  button:after {
+    content: "";
+    width: 0;
+    height: 0;
+    display: block;
+    border-top: 20px solid #187dbc;
+    border-bottom: 20px solid #187dbc;
+    border-left: 16px solid transparent;
+    border-right: 20px solid #187dbc;
+    position: absolute;
+    opacity: 0.6; 
+    right: 0;
+    top: 0;
+    border-radius: 0 5px 5px 0;  
+  }
+
+
+
+  .wrapper{
+    position: relative;
+    left:25%;
+	width: 50%;
+	background-color: #fff;
+	padding: 30px;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+.wrapper .input-data{
+	width: 100%;
+	height: 40px;
+	position: relative;
+}
+.wrapper .input-data input{
+	width: 100%;
+	height: 100%;
+	border: none;
+	border-bottom: 2px solid silver;
+	font-size: 17px;
+}
+.input-data input:focus ~ label,
+.input-data input:valid ~ label{
+	transform: translateY(-20px);
+	font-size: 15px;
+	color: #4158D0;
+}
+.wrapper .input-data label{
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	color: grey;
+	pointer-events: none;
+	transition: all 0.3s ease;
+}
+.wrapper .input-data .underline{
+	position: absolute;
+	bottom: 0px;
+	height: 2px;
+	width: 100%;
+}
+.input-data .underline:before{
+    right: 0%;
+	position: absolute;
+	content: "";
+	height: 100%;
+	width: 100%;
+	background: #4158D0;
+	transform: scaleX(0);
+	transition:transform 0.3s ease;
+}
+
+.input-data input:focus ~ .underline:before,
+.input-data input:valid ~ .underline:before{
+	transform: scaleX(1);
+}
+
+#keepBook1 { display: none;
+    font-size:20px;
+    color: white;
+    font-family:"Times New Roman", Times, serif;
+    font-style:italic; }
+
+@media screen and (max-width:500px){
+    #keepBook{
+        display: none;
+    }
+    #keepBook1{
+        display: inline-block;
+    }
+
+    #userSet1{
+        background: linear-gradient(-135deg,#a28c79,#6a3f5c);
+        border: 2px solid yellowgreen;
+    }
+    #displaySet{
+        background: linear-gradient(-135deg,#94652d,#0d6ba0);
+        border: 2px solid yellowgreen;
+    }
+    #userSet{
+            background: linear-gradient(-135deg,#66ed63,#08147f);  
+            border: 2px solid yellowgreen;
+    }
+    #searchSet{
+        background: linear-gradient(-135deg,#ae1e4a,#206cfb); 
+        border: 2px solid yellowgreen;
+    }
+    #top{
+        background: linear-gradient(-135deg,#9286b2,#cf62c4); 
+        border: 2px solid yellowgreen;
+    }
+    #addSet{
+        background: linear-gradient(-135deg,#77df99,#ada1a0); 
+        border: 2px solid yellowgreen;
+    }
+    #postSet{
+        background: linear-gradient(-135deg,#9540ff,#93e681); 
+        border: 2px solid yellowgreen;
+    }
+    #indexSet{
+        background: linear-gradient(-135deg,#b52975,#4d6ec7); 
+        border: 2px solid yellowgreen;
+    }
+    body{
+        background: linear-gradient(-135deg,#c38097,#d262f0); 
+        border: 2px solid yellowgreen;
+    }
+}
+
+

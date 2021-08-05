@@ -14,31 +14,47 @@ it every time without losing your information.
                 type="text/css"
                 href="style.css">
         <script src="java.js"></script>
+        <script src="d3.js"></script>
+        <script src="buttons.js"></script>
     </head>
     <body>
         
         <div id="indexSet">
-            <h1 id="ostaa">Ostaa</h1>
+            <h1 id="keepBook">KeepBooK</h1>
+            <h1 id="keepBook1">Mobile KB</h1>
             <h1>Login</h1>
-            <div class="left" >
-                <label  for="name">Username</label>
-                <input type ="text" name="name" id="name"/>
-                
+
+            
+
+            <div class="wrapper">
+                <div class="input-data" >
+                    <input type ="text" name="name" id="name" required=""/>
+                    <div class="underline"></div>
+                    <label>Username</label>
+	            </div>
             </div>
-            <div class="left">
-                <label   for="password">Password</label>
-                <input type ="password" name="password" id="password"/>
-                
+
+            <div class="wrapper">
+            <div class="input-data">
+                <input type ="password" name="password" id="password" required=""/>
+                <div class="underline"></div>
+                <label>Password</label>
+	        </div>
             </div>
+            
+            
             <div class="left">
                 <button  type="button" onclick="loginName();">Login</button>
             </div>
-
+            
+            
             <div class="left">
-                <button  type="button" onclick="window.location='add.html';">Register an account</button>
+                <p>Don't have an account yet?</p>
+                <button  type="button" onclick="window.location='add.html';">Create new account</button>
             </div>
-
+            <div id="errLogin" class="left" ></div>
             <br/>
+            
             <br/>
             <br/>
 

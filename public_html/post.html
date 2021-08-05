@@ -14,11 +14,14 @@ message after collecting it.
                 type="text/css"
                 href="style.css">
         <script src="java.js"></script>
+        <script src="d3.js"></script>
+        <script src="buttons.js"></script>
     </head>
     <body>
         
         <div id="postSet">
-            <h1 id="ostaa">Ostaa</h1>
+            <h1 id="keepBook">KeepBook</h1>
+            <h1 id="keepBook1">Mobile KB</h1>
             <h1>Add a Post</h1>
             
             <form action="/upload" method="post" enctype="multipart/form-data">
@@ -50,7 +53,7 @@ message after collecting it.
                     <input type ="text" name="dead" id="dead" pattern="[0-9]{1,}" required/>
                 </div>
     
-                <input type="file" accept="image/*" name="photo" >
+                <input type="file" accept="image/*" name="photo" required/>
                 <input type="submit" value="upload">
         </form>
     </div>

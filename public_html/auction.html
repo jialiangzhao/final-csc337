@@ -14,15 +14,31 @@ if you want to create something, or if you
                 type="text/css"
                 href="style.css">
         <script src="java.js"></script>
+        <script src="d3.js"></script>
+        <script src="buttons.js"></script>
     </head>
     <body onload="getName();searchList('all');">
         <div id="top"> 
-                <h1 id="keepBook">KeepBooK<h1>
+            <div class="topclass">
+                <h1  id="keepBook">KeepBooK <h1>
+                <h1 id="keepBook1">Mobile KB</h1>
+
+                </div>
+           
+            <div class="topclass">
+                    <h1 class="topclass" id="wellname"><h1>
+                        
             </div>
+            <div class="topclass" id="head">
+               
+                    
+            </div>
+            
+        </div>
 
 
-        <div id="userSet" >
-            <h1 >Welcome Back <span id="wellcome"></span>! Do you want to check your money?</h1>
+        <div id="userSet1" >
+            <h1 >Welcome Back <span id="wellcome"></span>! to buy something show who is Boss!</h1>
             <div class="sleft" >
                 
             <input type ="text" id="search"/>
@@ -36,12 +52,13 @@ if you want to create something, or if you
             <div class="sleft">
                 <button  type="button" onclick="getList('purchases');" >View item you bought</button>
             </div>
-            <button onclick="window.location='home.html';" type="button" >Home</button>
-            
 
+            <div class="sleft">
+                 <button onclick="window.location='home.html';" type="button" >Home</button>
+            </div>
         </div>
 
-        <div id="displaySet">
+        <div id="displaySet1">
             
 
 

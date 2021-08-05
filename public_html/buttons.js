@@ -1,32 +1,18 @@
-// 
-// buttons.js
-// Buttons Example for CSC444 Assignment 05
-// Joshua A. Levine <josh@email.arizona.edu
-//
-// This file provides a simple example of using d3 to create buttons in
-// an html webpage.  The buttons are created from a list of buttons
-// (called buttonList) that specifies the id, display text, and
-// event-handler function that should be called for each button click.
-//
-// All buttons are inserted by d3 within a div whose id is main
-//
-
-// Here is a list with objects that specify some buttons.
-
-
-
-
-
+/*
+Author: jialiangzhao
+Classroom: csc337
+Content: This is where the connection is obtained. 
+It needs to get the server connection. Then get the 
+value and transfer the value to the right.
+*/
 
     
-    
-    
-    function searchIncome(){
+function searchIncome(){
         let u = decodeURIComponent(document.cookie.split('=')[1]);
         u=u.substring(2);
         u=JSON.parse(u);
         let user=u.username;
-        
+        console.log(u.incomeList);
         var buttonList = [
             {
                 id: "colormap-button-1",
@@ -44,17 +30,17 @@
             },
             {
                 id: "SAT-cumulative",
-                text: "SAT-cumulative",
+                text: "TimeLine",
                 click: function() { d3.selectAll("circle")
                 .transition().duration(1500)
-                .attr("cx",function(d){return cxAdd(d.time-1628130000000);});
+                .attr("cx",function(d){return cxAdd((d.time-1628130000000)/60000);});
                 d3.select("#x-axis").transition().duration(1500).call(d3.axisBottom(xScale2));
                 d3.select("#xWord").transition().duration(1500).text("Time Line");
                 }
             },
             {
                 id: "SATV for X",
-                text: "SATV for X",
+                text: "Kind",
                 click: function() { d3.selectAll("circle")
                 .transition().duration(1500)
                 .attr("cx",function(d){return cxScale(kindChiose(d.kind));});
@@ -92,8 +78,8 @@
         .range([100,488]);
 
         var cxAdd = d3.scaleLinear()
-        .domain([d3.min(u.incomeList,d => d.time-1628130000000)
-            ,d3.max(u.incomeList,d => d.time-1628130000000)])
+        .domain([(d3.min(u.incomeList,d => d.time)-1628130000000)/60000
+            ,(d3.max(u.incomeList,d => d.time)-1628130000000)/60000])
         .range([100,488]);
     
     
@@ -136,8 +122,8 @@
         .range([50, 487]);
     
         var xScale2 = d3.scaleLinear()
-        .domain([d3.min(u.incomeList,d => d.time-1628130000000)
-            ,d3.max(u.incomeList,d => d.time)-1628130000000])
+        .domain([(d3.max(u.incomeList,d => d.time-1628130000000))/60000
+            ,(d3.min(u.incomeList,d => d.time)-1628130000000)/60000])
         .range([50, 487]);
     
     
